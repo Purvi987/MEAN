@@ -10,7 +10,7 @@ router.put("/:id", authorizer, async function (req, res) {
 		const handleProductUpdate = async () => {
 			let l = await Product.findByIdAndUpdate(
 				id,
-				{ ...req.body, updateOn: new Date() },
+				{ ...req.body, updateOn: new Date(), owner : ol.owner },
 				{
 					new: true,
 				}
@@ -79,7 +79,7 @@ router.put("/:id", authorizer, async function (req, res) {
 
 		let ol = await Product.findById(id);
 		if (user?.user?._id.toString() === ol.owner._id.toString()) {
-			if (Object.keys(req?.body).includes("price")) {
+			if (Object.keys(req?.body).includes("price") && req.body?.price !== ol.price) {
 				if (!ol?.updateOn) {
 					checkPrice();
 				} else {
@@ -121,7 +121,7 @@ router.put("/:id", authorizer, async function (req, res) {
 					error: {
 						message: "Unauthorized",
 					},
-					message: "You are not authorized for delete product",
+					message: "You are not authorized for uppdate product",
 				});
 		}
 	} catch (err) {
