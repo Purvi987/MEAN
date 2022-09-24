@@ -1,0 +1,149 @@
+<div class="col-md-10 offset-md-1 mt-5">
+  <div class="card">
+    <h4 class="card-header">
+      {{ isAddMode ? "Add Product" : "Edit Product" }}
+    </h4>
+    <div class="card-body">
+      <form [formGroup]="productForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <input
+            type="text"
+            formControlName="name"
+            class="form-control"
+            [ngClass]="{ 'is-invalid': submitted && form['name'].errors }"
+          />
+          <div
+            *ngIf="submitted && form['name'].errors"
+            class="invalid-feedback"
+          >
+            <div *ngIf="form['name'].errors['required']">Name is required</div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Image</label>
+          <input
+            type="file"
+            (change)="changeListener($event)"
+            formControlName="image"
+            class="form-control"
+            [ngClass]="{ 'is-invalid': submitted && form['image'].errors }"
+          />
+          <div
+            *ngIf="submitted && form['image'].errors"
+            class="invalid-feedback"
+          >
+            <div *ngIf="form['image'].errors['required']">
+              Image is required
+            </div>
+          </div>
+          <br />
+          <img *ngIf="image" src="{{ image }}" width="100" height="100" />
+        </div>
+        <div class="form-group">
+          <label>Product Code</label>
+          <input
+            type="text"
+            formControlName="productCode"
+            class="form-control"
+            [ngClass]="{
+              'is-invalid': submitted && form['productCode'].errors
+            }"
+          />
+          <div
+            *ngIf="submitted && form['productCode'].errors"
+            class="invalid-feedback"
+          >
+            <div *ngIf="form['productCode'].errors['required']">
+              Product code is required
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Price</label>
+          <input
+            type="text"
+            formControlName="price"
+            class="form-control"
+            [ngClass]="{ 'is-invalid': submitted && form['price'].errors }"
+          />
+          <div
+            *ngIf="submitted && form['price'].errors"
+            class="invalid-feedback"
+          >
+            <div *ngIf="form['price'].errors['required']">
+              Price is required
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Manufacturing Date</label>
+          <input
+            type="text"
+            class="form-control"
+            formControlName="manufactureDate"
+            #dp="bsDatepicker"
+            bsDatepicker
+            [(bsValue)]="manufactureDate"
+          />
+          <div
+            *ngIf="submitted && form['manufactureDate'].errors"
+            class="invalid-feedback"
+          >
+            <div *ngIf="form['manufactureDate'].errors['required']">
+              Manufacturing Date
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Expiry Date</label>
+          <input
+            type="text"
+            class="form-control"
+            formControlName="expiryDate"
+            #dp="bsDatepicker"
+            bsDatepicker
+            [(bsValue)]="expiryDate"
+          />
+          <div
+            *ngIf="submitted && form['expiryDate'].errors"
+            class="invalid-feedback"
+          >
+            <div *ngIf="form['expiryDate'].errors['required']">
+              Manufacturing Date
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Status</label>
+          <select
+            formControlName="status"
+            class="form-control"
+            [ngClass]="{ 'is-invalid': submitted && form['status'].errors }"
+          >
+            <option value="">--Select Product Status--</option>
+            <option value="1">In Inventory</option>
+            <option value="2">Out of Stock</option>
+          </select>
+          <div
+            *ngIf="submitted && form['status'].errors"
+            class="invalid-feedback"
+          >
+            <div *ngIf="form['status'].errors['required']">
+              Status is required
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <button [disabled]="loading" class="btn btn-primary">
+            <span
+              *ngIf="loading"
+              class="spinner-border spinner-border-sm mr-1"
+            ></span>
+            Save
+          </button>
+          <a routerLink="/" class="btn btn-link">Cancel</a>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
